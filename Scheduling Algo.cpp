@@ -1,6 +1,8 @@
 #include<bits/stdc++.h>
+#include<fstream>
 using namespace std;
-
+ifstream inputFile("input.txt");
+ofstream outputFile("output.txt"); 
 class process{
     public:
     int pid;
@@ -34,9 +36,9 @@ void printans(vector<process>&v,vector<int>&z)
 {
     double totalwt=0,totaltat=0;
     double k=v.size();
-    cout<<endl;
+    outputFile<<endl;
     sort(v.begin(),v.end(),sortbypid);
-    cout<<"Gantt chart:-|";
+    outputFile<<"Gantt chart:-|";
     int sz=z.size();
     for(int i=sz-1;i>=0;i--)
     {
@@ -47,20 +49,20 @@ void printans(vector<process>&v,vector<int>&z)
     }
     for(int i=0;i<z.size();i++)
     {
-        cout<<"P"<<z[i]<<"|";
+        outputFile<<"P"<<z[i]<<"|";
     }
-    cout<<endl<<endl;
-    cout<<"|    "<<"Pid"<<"   |    "<<"AT"<<"    |     "<<"BT"<<"      |       "<<"CT"<<"      |    "<<"TAT"<<"     |       "<<"WT"<<"      |"<<endl;
+    outputFile<<endl<<endl;
+    outputFile<<"|    "<<"Pid"<<"   |    "<<"AT"<<"    |     "<<"BT"<<"      |       "<<"CT"<<"      |    "<<"TAT"<<"     |       "<<"WT"<<"      |"<<endl;
     for(int i=0;i<v.size();i++)
     {
         totalwt+=v[i].wt;
         totaltat+=v[i].tat;
-        cout<<"|    "<<v[i].pid<<"     |    "<<v[i].at<<"     |     "<<v[i].bt<<"       |       "<<v[i].ct<<"       |     "<<v[i].tat<<"      |       "<<v[i].wt<<"       |"<<endl;
+        outputFile<<"|    "<<v[i].pid<<"     |    "<<v[i].at<<"     |     "<<v[i].bt<<"       |       "<<v[i].ct<<"       |     "<<v[i].tat<<"      |       "<<v[i].wt<<"       |"<<endl;
     }
-    cout<<endl;
-    cout<<"Average Turnaround time: "<<(totaltat/k)<<endl;
-    cout<<"Average Waiting time: "<<(totalwt/k)<<endl;
-    cout<<endl;
+    outputFile<<endl;
+    outputFile<<"Average Turnaround time: "<<(totaltat/k)<<endl;
+    outputFile<<"Average Waiting time: "<<(totalwt/k)<<endl;
+    outputFile<<endl;
 }
 
 void tatandwt(vector<process>&v)
@@ -212,7 +214,6 @@ void rr(int &n,int& ct,int &currtime,vector<process>&v,vector<int>&z,int &qt)
 }
 void prio_nonpre(vector<process>& v, vector<int>& z) {
     int till_here=0, n=v.size(), curr_time=0;
-    // priority, burst time, processID
     priority_queue<vector<int>, vector<vector<int>>, greater<vector<int>>>pq;
     while(till_here<n) {
         while(till_here<n && v[till_here].at<=curr_time) {
@@ -236,7 +237,6 @@ void prio_nonpre(vector<process>& v, vector<int>& z) {
 }
 void prio_pre(vector<process>& v, vector<int>& z) {
     int till_here=0, n=v.size(), curr_time=0;
-    // priority, burst time, processID, mapping
     priority_queue<vector<int>, vector<vector<int>>, greater<vector<int>>>pq;
     while(till_here<n) {
         while(till_here<n && v[till_here].at<=curr_time) {
@@ -260,31 +260,39 @@ void prio_pre(vector<process>& v, vector<int>& z) {
     }
 }
 int main()
-{
+{ 
+    if(!inputFile)
+    {
+        cout<<"Error in opening input file"<<endl;
+    }
+    if(!outputFile)
+    {
+        cout<<"Error in accessing ouput file"<<endl;
+    }
     int n;
-    cout<<"Enter Number of processes to be scheduled:-\n";
-    cin>>n;
+    outputFile<<"Enter Number of processes to be scheduled:-\n";
+    inputFile>>n;
     vector<process>v(n);
-    cout<<"Enter process id of all n processes in sorted order seperated by space:-\n";
+    outputFile<<"Enter process id of all n processes in sorted order seperated by space:-\n";
     for(int i=0;i<n;i++)
     {
-        cin>>v[i].pid;
+        inputFile>>v[i].pid;
     }
-    cout<<"Enter Arrival Time of all n processes in seperated by space:-\n";
+    outputFile<<"Enter Arrival Time of all n processes in seperated by space:-\n";
     for(int i=0;i<n;i++)
     {
-        cin>>v[i].at;
+        inputFile>>v[i].at;
     }
-    cout<<"Enter Burst Time of all n processes seperated by space:-\n";
+    outputFile<<"Enter Burst Time of all n processes seperated by space:-\n";
     for(int i=0;i<n;i++)
     {
-        cin>>v[i].bt;
+        inputFile>>v[i].bt;
     }
     int type;
-    cout<<"Enter 1)FCFS 2)SJF 3)SRTF 4)RR 5)Priority non preemptive 6)Priority preemptive :-\n";
+    outputFile<<"Enter 1)FCFS 2)SJF 3)SRTF 4)RR 5)Priority non preemptive 6)Priority preemptive :-\n";
     vector<int>z;
     int ct=0,currtime=0;
-    cin>>type;
+    inputFile>>type;
     switch (type)
     {
         case 1:
@@ -314,17 +322,17 @@ int main()
         case 4:
         {
             sort(v.begin(),v.end(),sorttheprocesses);
-            cout<<"Enter Time Quantam for Round Robin Schedular:";
+            outputFile<<"Enter Time Quantam for Round Robin Schedular:";
             int qt;
-            cin>>qt;
+            inputFile>>qt;
             rr(n,ct,currtime,v,z,qt);
             tatandwt(v);
             printans(v,z);
             break;
         }
         case 5: {
-            cout<<"Enter priorities: ";
-            for(int i=0; i<n; i++) cin>>v[i].priority;
+            outputFile<<"Enter priorities: ";
+            for(int i=0; i<n; i++) inputFile>>v[i].priority;
             sort(v.begin(),v.end(),sorttheprocesses);
             prio_nonpre(v, z);
             tatandwt(v);
@@ -332,8 +340,8 @@ int main()
             break;
         }
         case 6:{
-            cout<<"Enter priorities: ";
-            for(int i=0; i<n; i++) cin>>v[i].priority;
+            outputFile<<"Enter priorities: ";
+            for(int i=0; i<n; i++) inputFile>>v[i].priority;
             sort(v.begin(),v.end(),sorttheprocesses);
             prio_pre(v,z);
             tatandwt(v);
@@ -342,7 +350,11 @@ int main()
         }
         default:
         {
-            cout<<"Wrong  process selection index entered... try again...";
+            outputFile<<"Wrong  process selection index entered... try again...";
         }
     }
+    inputFile.close();
+    outputFile.close();
+
+    cout<<"Output is stored Successfull in output.txt file based on input from input.txt file... please refer that:>>>";
 }
