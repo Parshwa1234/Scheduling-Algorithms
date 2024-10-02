@@ -350,7 +350,7 @@ int main()
         }
         default:
         {
-            outputFile<<"Wrong  process selection index entered... try again...";
+            outputFile<<"Wrong  process selection index entered or Invalid input format... Enter input in proper sequence and try again...";
         }
     }
     inputFile.close();
