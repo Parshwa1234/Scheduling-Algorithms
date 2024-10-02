@@ -1,0 +1,18 @@
+Enter Number of processes to be scheduled:-
+Enter process id of all n processes in sorted order seperated by space:-
+Enter Arrival Time of all n processes in seperated by space:-
+Enter Burst Time of all n processes seperated by space:-
+Enter 1)FCFS 2)SJF 3)SRTF 4)RR 5)Priority non preemptive 6)Priority preemptive :-
+
+Gantt chart:-|P1|P4|P5|P2|P3|
+
+|    Pid   |    AT    |     BT      |       CT      |    TAT     |       WT      |
+|    1     |    2     |     5       |       7       |     5      |       0       |
+|    2     |    4     |     8       |       20       |     16      |       8       |
+|    3     |    6     |     9       |       29       |     23      |       14       |
+|    4     |    7     |     3       |       10       |     3      |       0       |
+|    5     |    9     |     2       |       12       |     3      |       1       |
+
+Average Turnaround time: 10
+Average Waiting time: 4.6
+
