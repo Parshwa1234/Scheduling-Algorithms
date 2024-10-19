@@ -8,4 +8,6 @@ Basically We have implemented switch case for 1)First come first serve 2)Shortes
 
 We calculated completion time based on algorithms implemented in functions created for each and TAT=CT-AT and WT=TAT-BT. Then we have printed Gantt chart for scheduling algorithm and also table of AT,BT,CT,TAT,WT for visulization of algorithm in output.txt file and displayed average waiting and turn around time for visulazing efficiency of algorithm...
 
+For Easy C++ and user friendy code run use Scheduling_Algorithms.cpp and for file handling use Scheduling_With_fileHandling.cpp
+
 Hope you liked Approach and structured code including features like File handling, Object handling, Priority queue, Queue, Vector handling, Algorithms and Logics.
